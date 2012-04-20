@@ -31,7 +31,7 @@ class Logger extends AppModel
 	);
 
 	public $belongsTo = array(
-		'AuditableMongoLogger.LogDetail' => array('className' => 'LogDetail')
+		'LogDetail' => array('className' => 'AuditableMongoLogger.LogDetail')
 	);
 
 	public $mongoSchema = array(
