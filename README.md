@@ -6,8 +6,11 @@ Plugin com os modelos do Auditable adaptado ao CakeMongoDb
 Requisitos
 ----------
 
-[Plugin Auditable](https://github.com/radig/auditable)
-[Plugin CakeMongoDb](https://github.com/ichikaway/cakephp-mongodb)
+Os seguintes plugins devem estar presentes e configurados para
+correto funcionamento deste:
+
+* [Plugin Auditable](https://github.com/radig/auditable)
+* [Plugin CakeMongoDb](https://github.com/ichikaway/cakephp-mongodb)
 
 Configuração
 ------------
