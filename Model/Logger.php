@@ -1,5 +1,5 @@
 <?php
-App::import('Vendor', 'Auditable.AuditableConfig');
+App::uses('AuditableConfig', 'Auditable.Lib');
 /**
  * Classe que representa as informações de log do sistema.
  * Depende da existência de uma conexão nomeada 'mongo', utilizando
@@ -109,20 +109,5 @@ class Logger extends AppModel
 		}
 
 		return $data;
-	}
-
-	/**
-	 * Implementa função existis da API do Cake 2.0 na versão 1.3
-	 *
-	 * Verifica se um registro existe no BD
-	 *
-	 * @return bool
-	 */
-	public function exists()
-	{
-		if(empty($this->id))
-			return false;
-
-		return ($this->find('count', array('conditions' => array('Logger.id' => $this->id), 'recursive' => -1)) > 0);
 	}
 }

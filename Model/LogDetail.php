@@ -16,7 +16,8 @@
  * @package       Radig.AuditableMongoLogger
  * @subpackage    Radig.AuditableMongoLogger.Models
  */
-class LogDetail extends AppModel {
+class LogDetail extends AppModel
+{
 	public $name = 'LogDetail';
 
 	public $useDbConfig = 'mongo';
@@ -24,7 +25,7 @@ class LogDetail extends AppModel {
 	public $useTable = 'log_details';
 
 	public $hasOne = array(
-		'AuditableMongoLogger.Logger' => array('className' => 'Logger')
+		'Logger' => array('className' => 'AuditableMongoLogger.Logger')
 	);
 
 	public $mongoSchema = array(
