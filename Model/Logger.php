@@ -35,11 +35,11 @@ class Logger extends AppModel
 	);
 
 	public $mongoSchema = array(
-		'user_id' => array('type' => 'integer'),
+		'user_id' => array('type' => 'string'),
 		'model_alias' => array('type' => 'string'),
-		'model_id' => array('type' => 'integer'),
+		'model_id' => array('type' => 'string'),
 		'type' => array('type' => 'integer'),
-		'log_detail_id' => array('type' => 'integer'),
+		'log_detail_id' => array('type' => 'string'),
 		'created' => array('type' => 'datetime'),
 		'modified' => array('type' => 'datetime'),
 	);
