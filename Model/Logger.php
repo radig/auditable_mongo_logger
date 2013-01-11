@@ -15,7 +15,7 @@ App::uses('AuditableConfig', 'Auditable.Lib');
  * @copyright     Copyright 2012, Radig Soluções em TI. (http://www.radig.com.br)
  * @link          http://www.radig.com.br
  * @package       Radig.AuditableMongoLogger
- * @subpackage    Radig.AuditableMongoLogger.Models
+ * @subpackage    Radig.AuditableMongoLogger.Model
  */
 class Logger extends AppModel
 {
@@ -24,6 +24,8 @@ class Logger extends AppModel
 	public $useDbConfig = 'mongo';
 
 	public $useTable = 'logs';
+
+	public $primaryKey = '_id';
 
 	public $actsAs = array(
 		'Containable',
@@ -35,7 +37,7 @@ class Logger extends AppModel
 	);
 
 	public $mongoSchema = array(
-		'user_id' => array('type' => 'string'),
+		'responsible_id' => array('type' => 'string'),
 		'model_alias' => array('type' => 'string'),
 		'model_id' => array('type' => 'string'),
 		'type' => array('type' => 'integer'),
@@ -70,11 +72,11 @@ class Logger extends AppModel
 		$contain = array('LogDetail');
 
 		$data = $this->find('first', array(
-			'conditions' => array('Logger._id' => $id),
+			'conditions' => array("Logger.{$this->primaryKey}" => $id),
 		));
 
 		$logger = $this->LogDetail->find('first', array(
-			'conditions' => array('LogDetail._id' => $data['Logger']['log_detail_id']),
+			'conditions' => array("LogDetail.{$this->LogDetail->primaryKey}" => $data['Logger']['log_detail_id']),
 		));
 
 		$data['LogDetail'] = $logger['LogDetail'];
@@ -83,10 +85,10 @@ class Logger extends AppModel
 
 		if($loadResource)
 		{
-			$Resource = ClassRegistry::init($data[$this->name]['model_alias']);
+			$Resource = ClassRegistry::init($data[$this->alias]['model_alias']);
 
 			$linked = $Resource->find('first', array(
-				'conditions' => array('id' => $data[$this->name]['model_id']),
+				'conditions' => array('id' => $data[$this->alias]['model_id']),
 				'recursive' => -1
 				)
 			);
@@ -94,18 +96,21 @@ class Logger extends AppModel
 
 		if(!empty($linked))
 		{
-			$data[$Resource->name] = $linked[$Resource->name];
+			$data[$Resource->alias] = $linked[$Resource->alias];
 		}
 
-		$data['Responsible']['name'] = '';
-		if(!empty(AuditableConfig::$userModel) && !empty($data['Logger']['user_id']))
+		$data['Responsible'] = array();
+		if(!empty(AuditableConfig::$responsibleModel) && !empty($data['Logger']['responsible_id']))
 		{
-			$userModel = ClassRegistry::init(AuditableConfig::$userModel);
-			$userModel->recursive = -1;
-			$user = $userModel->read(null, $data['Logger']['user_id']);
+			$responsibleModel = ClassRegistry::init(AuditableConfig::$responsibleModel);
+			$responsibleModel->recursive = -1;
+			$aux = $responsibleModel->read(null, $data['Logger']['responsible_id']);
 
-			$data['Responsible'] = $user['User'];
-			$data['Responsible']['name'] = $user['User']['name'];
+			if(!empty($aux)) {
+				$data['Responsible'] = $aux[AuditableConfig::$responsibleModel];
+			} else {
+				$data['Responsible'][$responsibleModel->displayField] = '';
+			}
 		}
 
 		return $data;
