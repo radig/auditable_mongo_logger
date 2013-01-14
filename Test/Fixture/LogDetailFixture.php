@@ -40,7 +40,7 @@ class LogDetailFixture extends CakeTestFixture {
 	 */
 	public $records = array(
 		array(
-			'id'  => '1',
+			'id'  => 1,
 			'difference' => '{}',
 			'statement' => '',
 			'created'  => '2012-03-08 15:20:10',

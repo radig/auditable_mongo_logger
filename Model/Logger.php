@@ -88,10 +88,11 @@ class Logger extends AppModel
 			$Resource = ClassRegistry::init($data[$this->alias]['model_alias']);
 
 			$linked = $Resource->find('first', array(
-				'conditions' => array('id' => $data[$this->alias]['model_id']),
+				'conditions' => array($Resource->primaryKey => $data[$this->alias]['model_id']),
 				'recursive' => -1
 				)
 			);
+
 		}
 
 		if(!empty($linked))
