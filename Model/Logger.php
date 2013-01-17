@@ -21,8 +21,6 @@ class Logger extends AppModel
 {
 	public $name = 'Logger';
 
-	public $useDbConfig = 'mongo';
-
 	public $useTable = 'logs';
 
 	public $primaryKey = '_id';

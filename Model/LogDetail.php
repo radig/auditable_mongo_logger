@@ -20,8 +20,6 @@ class LogDetail extends AppModel
 {
 	public $name = 'LogDetail';
 
-	public $useDbConfig = 'mongo';
-
 	public $useTable = 'log_details';
 
 	public $primaryKey = '_id';

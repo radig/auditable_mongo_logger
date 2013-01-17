@@ -15,7 +15,9 @@ correto funcionamento deste:
 Configuração
 ------------
 
-Adicione ao seu database.php uma nova conexão, nomeada **mongo**, que
+Caso sua conexão default já seja com Mongodb, não é preciso criar uma nova.
+
+Caso contrário, adicione ao seu database.php uma nova conexão, nomeada **mongo**, que
 deve ter uma estrutra como:
 
     public $mongo = array(
@@ -23,9 +25,13 @@ deve ter uma estrutra como:
         'database' => '_MEUDATABASE_',
     );
 
-No callback **beforeFilter** do *app_controller.php* inclua algo como:
+No callback **beforeFilter** do *app_controller.php* inclua algo como
 
-    AuditableConfig::$Logger =& ClassRegistry::init('AuditableMongoLogger.Logger');
+	// Use esta linha caso sua conexão default já seja com Mongodb
+    AuditableConfig::$Logger = ClassRegistry::init('AuditableMongoLogger.Logger');
+
+    // Use esta linha caso contrário
+    AuditableConfig::$Logger = ClassRegistry::init('AuditableMongoLogger.Logger', array('ds' => 'mongo'));
 
 A partir daí sua aplicação começará a salvar os logs gerados pelo Auditable na sua
 base _MEUDATABASE_. Basta criar um controller que busque as informações no modelo
