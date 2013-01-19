@@ -25,7 +25,7 @@ deve ter uma estrutra como:
         'database' => '_MEUDATABASE_',
     );
 
-No callback **beforeFilter** do *app_controller.php* inclua algo como
+No construtor do seu **AppModel** inclua algo como
 
 	// Use esta linha caso sua conexão default já seja com Mongodb
     AuditableConfig::$Logger = ClassRegistry::init('AuditableMongoLogger.Logger');
