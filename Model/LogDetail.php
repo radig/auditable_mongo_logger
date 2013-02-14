@@ -1,4 +1,6 @@
 <?php
+App::uses('AppModel', 'Model');
+
 /**
  * Classe que representa os detalhes de um log do sistema.
  * Depende da existência de uma conexão nomeada 'mongo', utilizando

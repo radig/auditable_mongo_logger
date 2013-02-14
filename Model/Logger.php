@@ -1,4 +1,5 @@
 <?php
+App::uses('AppModel', 'Model');
 App::uses('AuditableConfig', 'Auditable.Lib');
 /**
  * Classe que representa as informações de log do sistema.
