@@ -21,11 +21,13 @@ class LoggerFixture extends CakeTestFixture {
 	 */
 	public $table = 'logs';
 
+	public $useDbConfig = 'test_mongo';
+
 	/**
 	 * @var array
 	 */
 	public $fields = array(
-		'id' => array('type' => 'integer', 'key' => 'primary'),
+		'_id' => array('type' => 'integer', 'key' => 'primary'),
 		'responsible_id' => array('type'=>'integer', 'null' => true, 'default' => NULL),
 		'model_alias' => array('type'=>'string', 'null' => false, 'default' => NULL),
 		'model_id' => array('type'=>'integer', 'null' => false, 'default' => NULL),
@@ -43,7 +45,7 @@ class LoggerFixture extends CakeTestFixture {
 	 */
 	public $records = array(
 		array(
-			'id'  => 1,
+			'_id'  => 1,
 			'responsible_id'  => '0',
 			'model_alias' => 'Auditable.User',
 			'model_id' => 1,

@@ -8,12 +8,12 @@ App::uses('AppModel', 'Model');
  *
  * PHP version 5
  *
- * Copyright 2012, Radig Soluções em TI. (http://www.radig.com.br)
+ * Copyright 2012-2013, Radig Soluções em TI. (http://www.radig.com.br)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2012, Radig Soluções em TI. (http://www.radig.com.br)
+ * @copyright     Copyright 2012-2013, Radig Soluções em TI. (http://www.radig.com.br)
  * @link          http://www.radig.com.br
  * @package       Radig.AuditableMongoLogger
  * @subpackage    Radig.AuditableMongoLogger.Models
@@ -23,6 +23,8 @@ class LogDetail extends AppModel
 	public $name = 'LogDetail';
 
 	public $useTable = 'log_details';
+
+	public $useDbConfig = 'mongo';
 
 	public $primaryKey = '_id';
 

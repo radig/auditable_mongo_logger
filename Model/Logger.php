@@ -8,12 +8,12 @@ App::uses('AuditableConfig', 'Auditable.Lib');
  *
  * PHP version 5
  *
- * Copyright 2012, Radig Soluções em TI. (http://www.radig.com.br)
+ * Copyright 2012-2013, Radig Soluções em TI. (http://www.radig.com.br)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2012, Radig Soluções em TI. (http://www.radig.com.br)
+ * @copyright     Copyright 2012-2013, Radig Soluções em TI. (http://www.radig.com.br)
  * @link          http://www.radig.com.br
  * @package       Radig.AuditableMongoLogger
  * @subpackage    Radig.AuditableMongoLogger.Model
@@ -23,6 +23,8 @@ class Logger extends AppModel
 	public $name = 'Logger';
 
 	public $useTable = 'logs';
+
+	public $useDbConfig = 'mongo';
 
 	public $primaryKey = '_id';
 
@@ -82,8 +84,7 @@ class Logger extends AppModel
 
 		$linked = null;
 
-		if($loadResource)
-		{
+		if ($loadResource) {
 			$Resource = ClassRegistry::init($data[$this->alias]['model_alias']);
 
 			$linked = $Resource->find('first', array(
@@ -94,19 +95,17 @@ class Logger extends AppModel
 
 		}
 
-		if(!empty($linked))
-		{
+		if (!empty($linked)) {
 			$data[$Resource->alias] = $linked[$Resource->alias];
 		}
 
 		$data['Responsible'] = array();
-		if(!empty(AuditableConfig::$responsibleModel) && !empty($data['Logger']['responsible_id']))
-		{
+		if (!empty(AuditableConfig::$responsibleModel) && !empty($data['Logger']['responsible_id'])) {
 			$responsibleModel = ClassRegistry::init(AuditableConfig::$responsibleModel);
 			$responsibleModel->recursive = -1;
 			$aux = $responsibleModel->read(null, $data['Logger']['responsible_id']);
 
-			if(!empty($aux)) {
+			if (!empty($aux)) {
 				$data['Responsible'] = $aux[AuditableConfig::$responsibleModel];
 			} else {
 				$data['Responsible'][$responsibleModel->displayField] = '';

@@ -1,25 +1,12 @@
 <?php
 App::uses('AuditableConfig', 'Auditable.Lib');
 App::uses('Logger', 'AuditableMongoLogger.Model');
-
-if(!class_exists('User'))
-{
-	class User extends CakeTestModel
-	{
-		public $callbackData = array();
-
-		public $useTable = 'users';
-
-		public $name = 'User';
-	}
-}
+App::uses('LogDetail', 'AuditableMongoLogger.Model');
 
 class LoggerTest extends CakeTestCase {
 	public $Logger = null;
 
-	public $User = null;
-
-	public $plugin = 'Auditable';
+	public $plugin = 'AuditableMongoLogger';
 
 	public $fixtures = array(
 		'plugin.auditable_mongo_logger.logger',
@@ -29,8 +16,7 @@ class LoggerTest extends CakeTestCase {
 
 	public function setUp()
 	{
-		$this->Logger = ClassRegistry::init('AuditableMongoLogger.Logger');
-		$this->User = ClassRegistry::init('User');
+		$this->Logger = ClassRegistry::init('AuditableMongoLogger.Logger', true);
 
 		AuditableConfig::$responsibleModel = 'Auditable.User';
 	}
@@ -47,10 +33,9 @@ class LoggerTest extends CakeTestCase {
 
 		$this->Logger->deleteAll(true, false);
 		$this->Logger->LogDetail->deleteAll(true, false);
-		$this->User->deleteAll(true, false);
 
 		unset($this->Logger);
-		unset($this->User);
+
 		ClassRegistry::flush();
 	}
 
@@ -81,6 +66,7 @@ class LoggerTest extends CakeTestCase {
 	{
 		$this->Logger->recursive = -1;
 		$result = $this->Logger->read(null, 1);
+
 		$expected = array(
 			'Logger' => array(
 				'_id'  => 1,

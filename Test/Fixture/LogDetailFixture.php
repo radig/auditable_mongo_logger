@@ -21,6 +21,8 @@ class LogDetailFixture extends CakeTestFixture {
 	 */
 	public $table = 'log_details';
 
+	public $useDbConfig = 'test_mongo';
+
 	/**
 	 * @var array
 	 */
